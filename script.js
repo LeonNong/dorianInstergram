@@ -81,7 +81,7 @@ async function loadComments(postId) {
     commentsEl.innerHTML = '<div class="loading-comments">Loading comments...</div>';
 
   try {
-    const res = await fetch(`${API}/comments/${postId}`);
+    const res = await fetch(`${API}?postId=${postId}`);
     const comments = await res.json();
     renderComments(comments);
   } catch {
@@ -157,7 +157,7 @@ async function submitComment(e) {
   commentsEl.scrollTop = commentsEl.scrollHeight;
 
   try {
-    const res = await fetch(`${API}/comments/${currentPost}`, {
+    const res = await fetch(`${API}?postId=${currentPost}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: visitorName, text })
