@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>@the.real.dorian.gray • Instagram</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- LEFT SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </div>
+    <ul class="sidebar-nav">
+      <li class="nav-item active"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></li>
+      <li class="nav-item"><span class="nav-icon">🔍</span><span class="nav-label">Search</span></li>
+      <li class="nav-item"><span class="nav-icon">🎬</span><span class="nav-label">Reels</span></li>
+      <li class="nav-item"><span class="nav-icon">💬</span><span class="nav-label">Messages</span></li>
+      <li class="nav-item"><span class="nav-icon">❤️</span><span class="nav-label">Notifications</span></li>
+      <li class="nav-item"><span class="nav-icon">➕</span><span class="nav-label">Create</span></li>
+      <li class="nav-item"><span class="nav-icon">👤</span><span class="nav-label">Profile</span></li>
+    </ul>
+    <div class="sidebar-bottom">
+      <li class="nav-item"><span class="nav-icon">☰</span><span class="nav-label">More</span></li>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- PROFILE HEADER -->
+    <section class="profile-header">
+      <div class="profile-pic-wrap">
+        <img src="Instagram_files/490943702_18266501950278413_6130592774578385920_n.jpg" alt="Dorian Gray" class="profile-pic" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="profile-pic-fallback">D</div>
+      </div>
+
+      <div class="profile-info">
+        <div class="username-row">
+          <h2>the.real.dorian.gray</h2>
+          <button class="btn-follow" id="followBtn">Follow</button>
+          <button class="btn-msg">Message</button>
+          <button class="btn-more">···</button>
+        </div>
+        <div class="stats-row">
+          <span><strong>3</strong> posts</span>
+          <span><strong>24.3K</strong> followers</span>
+          <span><strong>12</strong> following</span>
+        </div>
+        <div class="bio">
+          <strong>Dorian Gray</strong><br/>
+          Digital creator<br/>
+          Forever young. Forever beautiful. 💛<br/>
+          London's finest · Art · Pleasure · Power<br/>
+          <em>"The only way to get rid of a temptation is to yield to it."</em><br/>
+          📍 Mayfair, London
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY HIGHLIGHTS -->
+    <section class="highlights">
+      <div class="highlight" onclick="openStory('The Portrait')">
+        <div class="highlight-circle">🖼️</div>
+        <span>The Portrait</span>
+      </div>
+      <div class="highlight" onclick="openStory('Nights Out')">
+        <div class="highlight-circle">🥂</div>
+        <span>Nights Out</span>
+      </div>
+      <div class="highlight" onclick="openStory('Sibyl')">
+        <div class="highlight-circle">🌹</div>
+        <span>Sibyl</span>
+      </div>
+      <div class="highlight" onclick="openStory('Society')">
+        <div class="highlight-circle">🎭</div>
+        <span>Society</span>
+      </div>
+      <div class="highlight" onclick="openStory('China')">
+        <div class="highlight-circle">🏮</div>
+        <span>China</span>
+      </div>
+      <div class="highlight" onclick="openStory('Italy')">
+        <div class="highlight-circle">🇮🇹</div>
+        <span>Italy</span>
+      </div>
+    </section>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab(this, 'grid')">⊞ Posts</div>
+      <div class="tab" onclick="switchTab(this, 'reels')">▶ Reels</div>
+      <div class="tab" onclick="switchTab(this, 'tagged')">🏷 Tagged</div>
+    </div>
+
+    <!-- POSTS GRID -->
+    <section class="grid-view" id="grid">
+      <div class="grid-thumb" onclick="openPost(0)">
+        <img src="Instagram_files/501459026_18270975967278413_2525491125612420476_n.jpg" alt="post1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="thumb-fallback">🥂</div>
+        <div class="thumb-overlay"><span>❤️ 7,103</span><span>💬 3</span></div>
+      </div>
+      <div class="grid-thumb" onclick="openPost(1)">
+        <img src="Instagram_files/503894269_715399024326390_8311297579143623993_n.jpg" alt="post2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="thumb-fallback">🖼️</div>
+        <div class="thumb-overlay"><span>❤️ 4,821</span><span>💬 3</span></div>
+      </div>
+      <div class="grid-thumb" onclick="openPost(2)">
+        <img src="Instagram_files/504358032_18273822289278413_2535619005380173148_n.jpg" alt="post3" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="thumb-fallback">🪞</div>
+        <div class="thumb-overlay"><span>❤️ 11,450</span><span>💬 3</span></div>
+      </div>
+    </section>
+
+    <section class="grid-view hidden" id="reels">
+      <div class="grid-thumb reel-thumb"><div class="thumb-fallback">🎬</div><div class="reel-label">▶ Reel</div></div>
+      <div class="grid-thumb reel-thumb"><div class="thumb-fallback">🎭</div><div class="reel-label">▶ Reel</div></div>
+    </section>
+
+    <section class="grid-view hidden" id="tagged">
+      <div class="empty-tab">No tagged posts yet.</div>
+    </section>
+
+  </main>
+
+  <!-- POST MODAL -->
+  <div class="modal-overlay hidden" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" id="modal">
+      <button class="modal-close" onclick="closePostModal()">✕</button>
+      <div class="modal-img-wrap">
+        <img id="modalImg" src="" alt="post"/>
+        <div id="modalImgFallback" class="modal-img-fallback"></div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-user">
+          <div class="modal-avatar">D</div>
+          <strong>the.real.dorian.gray</strong>
+        </div>
+        <div class="modal-caption" id="modalCaption"></div>
+        <div class="modal-comments" id="modalComments"></div>
+        <div class="modal-actions">
+          <span class="modal-like-btn" id="modalLikeBtn" onclick="toggleModalLike()">🤍</span>
+          <span>💬</span>
+          <span>📤</span>
+          <span style="margin-left:auto">🔖</span>
+        </div>
+        <div class="modal-likes" id="modalLikes"></div>
+        <div class="modal-input-row">
+          <input type="text" id="commentInput" placeholder="Add a comment..." onkeydown="submitComment(event)"/>
+          <button onclick="submitComment({key:'Enter'})">Post</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORY MODAL -->
+  <div class="story-overlay hidden" id="storyOverlay" onclick="closeStory()">
+    <div class="story-box">
+      <div class="story-header">
+        <div class="modal-avatar">D</div>
+        <span>the.real.dorian.gray</span>
+        <button onclick="closeStory()">✕</button>
+      </div>
+      <div class="story-content" id="storyContent"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

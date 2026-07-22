@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/comments/:postId", "destination": "/api/comments?postId=:postId" }
+  ]
+}

@@ -1,0 +1,7 @@
+node_modules/
+.env
+comments.json
+Instagram_files/*.下载
+Instagram_files/*.js
+Instagram_files/*.css
+Instagram_files/saved_resource.html
