@@ -16,7 +16,8 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // JSON file to store comments
 const COMMENTS_FILE = 'comments.json';
-if (!fs.existsSync(COMMENTS_FILE)) {
+// comments.json is only used locally, not on Vercel
+if (process.env.NODE_ENV !== 'production' && !fs.existsSync(COMMENTS_FILE)) {
   fs.writeFileSync(COMMENTS_FILE, JSON.stringify({ posts: { 0: [], 1: [], 2: [] } }));
 }
 
