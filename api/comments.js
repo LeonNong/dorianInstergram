@@ -1,7 +1,5 @@
 const { OpenAI } = require('openai');
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 const DORIAN_SYSTEM_PROMPT = `You are Dorian Gray from Oscar Wilde's "The Picture of Dorian Gray".
 
 Your personality:
@@ -23,35 +21,31 @@ Rules:
 - If someone is rude, respond with icy aristocratic disdain
 - Responses feel like Instagram comments — casual but sophisticated`;
 
-// In-memory store (resets on cold start — fine for demo/school project)
-const commentsStore = { 0: [], 1: [], 2: [] };
+// In-memory store per serverless instance
+const commentsStore = {};
 
-// Seed with initial character comments
 const initialComments = {
-  0: [
+  '0': [
     { id: 1, user: 'lordhenrywotton', text: "You've finally learned how to live, Dorian. Proud of you. 🍷", isDorian: false },
     { id: 2, user: 'basilhallward_art', text: 'I worry about you. Where are you going at this hour?', isDorian: false },
     { id: 3, user: 'james_vane__', text: 'Enjoy it while it lasts. 👀', isDorian: false }
   ],
-  1: [
+  '1': [
     { id: 4, user: 'basilhallward_art', text: "Dorian, please… that painting was made with love. Don't lock it away. 💔", isDorian: false },
     { id: 5, user: 'lordhenrywotton', text: 'Wise move, my dear boy. Some masterpieces are too powerful for public display. 😏', isDorian: false },
     { id: 6, user: 'sibyljvane', text: 'I painted you in my heart too 🌹', isDorian: false }
   ],
-  2: [
+  '2': [
     { id: 7, user: 'basilhallward_art', text: "Dorian… what have you done? You look exactly the same as 20 years ago.", isDorian: false },
     { id: 8, user: 'lordhenrywotton', text: 'Youth is a gift. Spend it recklessly. 😈', isDorian: false },
     { id: 9, user: 'sibyljvane', text: 'I used to think you were beautiful inside too. I was wrong. 💔', isDorian: false }
   ]
 };
 
-// Merge initial comments on first access
 function getPostComments(postId) {
   const id = String(postId);
   if (!commentsStore[id]) commentsStore[id] = [];
-  const initial = initialComments[id] || [];
-  const userComments = commentsStore[id];
-  return [...initial, ...userComments];
+  return [...(initialComments[id] || []), ...commentsStore[id]];
 }
 
 module.exports = async function handler(req, res) {
@@ -63,17 +57,21 @@ module.exports = async function handler(req, res) {
 
   const postId = req.query.postId;
 
-  // GET comments
+  // Health check
+  if (req.method === 'GET' && !postId) {
+    return res.json({ status: 'ok', hasKey: !!process.env.OPENAI_API_KEY });
+  }
+
   if (req.method === 'GET') {
     return res.json(getPostComments(postId));
   }
 
-  // POST new comment
   if (req.method === 'POST') {
-    const { username, text } = req.body;
+    const { username, text } = req.body || {};
     if (!text || !text.trim()) return res.status(400).json({ error: 'Empty comment' });
 
-    if (!commentsStore[postId]) commentsStore[postId] = [];
+    const id = String(postId);
+    if (!commentsStore[id]) commentsStore[id] = [];
 
     const userComment = {
       id: Date.now(),
@@ -81,10 +79,18 @@ module.exports = async function handler(req, res) {
       text: text.trim(),
       isDorian: false
     };
-    commentsStore[postId].push(userComment);
+    commentsStore[id].push(userComment);
 
-    // Generate Dorian's reply
+    // Check API key exists
+    if (!process.env.OPENAI_API_KEY) {
+      console.error('OPENAI_API_KEY is not set');
+      return res.json({ userComment, dorianReply: null, error: 'API key not configured' });
+    }
+
     try {
+      // Initialize OpenAI lazily inside handler
+      const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
       const completion = await openai.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [
@@ -102,12 +108,12 @@ module.exports = async function handler(req, res) {
         text: replyText,
         isDorian: true
       };
-      commentsStore[postId].push(dorianComment);
+      commentsStore[id].push(dorianComment);
 
       return res.json({ userComment, dorianReply: dorianComment });
     } catch (err) {
-      console.error('OpenAI error:', err.message);
-      return res.json({ userComment, dorianReply: null });
+      console.error('OpenAI error:', err.message, err.status);
+      return res.json({ userComment, dorianReply: null, error: err.message });
     }
   }
 
